@@ -25,7 +25,7 @@ public class BeatManager : MonoBehaviour
     private int currentBeat = 0;
     private float nextBeatTime = 0f;
     private float beatInterval;
-    private bool isInDowntime = false;
+    [HideInInspector]public bool isInDowntime = false;
     private AudioSource activeSource;
 
     void Start()
@@ -55,7 +55,7 @@ public class BeatManager : MonoBehaviour
         // Song finished, start downtime
         if (currentBeat >= track.beatMap.Length)
         {
-            StartCoroutine(TransitionToNextTrack());
+            currentBeat = 0;
             return;
         }
 
@@ -76,6 +76,10 @@ public class BeatManager : MonoBehaviour
         beat.GetComponent<Beat>().speed = beatSpeed;
     }
 
+    public void NextSong()
+    {
+        StartCoroutine(TransitionToNextTrack());
+    }
     IEnumerator TransitionToNextTrack()
     {
         isInDowntime = true;

@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 
 public class SweetSpotTrigger : MonoBehaviour
 {
     public InputAction hitAction;
+    public ProgressionBar progressBarScript;
 
     private Collider2D beatInZone = null;
 
@@ -24,13 +26,17 @@ public class SweetSpotTrigger : MonoBehaviour
     {
         if (beatInZone != null)
         {
+            
+            progressBarScript.AddFill();
             Destroy(beatInZone.gameObject);
             beatInZone = null;
             Debug.Log("Hit!");
+           
         }
         else
         {
             Debug.Log("Empty press");
+            progressBarScript.MinusFill();
         }
     }
 
@@ -46,6 +52,7 @@ public class SweetSpotTrigger : MonoBehaviour
         {
             beatInZone = null;
             Debug.Log("Miss");
+            progressBarScript.MinusFill();
         }
     }
 }
