@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Beat
+  - BeatBlue
+  - BeatKey
   layers:
   - Default
   - TransparentFX

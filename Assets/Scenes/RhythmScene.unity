@@ -975,8 +975,8 @@ RectTransform:
   - {fileID: 800235749}
   - {fileID: 2044388287}
   - {fileID: 138255545}
-  - {fileID: 1318558296}
   - {fileID: 1215943121}
+  - {fileID: 1318558296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1799,20 +1799,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatManager
   tracks:
   - clip: {fileID: 8300000, guid: ddb74c97311bf114185adc3141c66797, type: 3}
-    bpm: 124
-    beatMap: 0000000000000000000000000000000001000000000000000100000001000000010000000000000001000000010000000000000001000000000000000100000000000000010000000100000000000000010000000100000001000000000000000100000000000000010000000100000000000000010000000100000000000000000000000100000001000000010000000000000001000000000000000000000001000000000000000100000000000000010000000000000001000000010000000100000001000000
+    bpm: 496
+    beatMap: 
     offset: 0
   - clip: {fileID: 8300000, guid: 8c78d057b9ed0934b927710346a3a54f, type: 3}
-    bpm: 90
-    beatMap: 0100000000000000010000000000000001000000010000000000000000000000010000000100000001000000010000000000000001000000010000000000000001000000000000000100000000000000010000000100000001000000010000000100000000000000000000000100000001000000010000000000000001000000010000000100000000000000010000000100000000000000000000000100000000000000000000000100000000000000000000000000000001000000000000000000000001000000
-    offset: 20
+    bpm: 360
+    beatMap: 
+    offset: 0
   sourceA: {fileID: 1465963172}
   sourceB: {fileID: 1992540008}
   crossfadeDuration: 2
   downtimeDuration: 3
   beatSpeed: 300
   spawnPoint: {fileID: 5789262736780302918}
-  beatPrefab: {fileID: 3606747140297932524, guid: efe566b6544e82141be6abf969195247, type: 3}
+  beatPrefabRed: {fileID: 3606747140297932524, guid: efe566b6544e82141be6abf969195247, type: 3}
+  beatPrefabBlue: {fileID: 3606747140297932524, guid: 1ebb25788fbf98241850beae4ee52459, type: 3}
+  beatPrefabKey: {fileID: 3606747140297932524, guid: 29161ba44fe629e4881f324677f5bb62, type: 3}
   canvas: {fileID: 1215943121}
   isInDowntime: 0
 --- !u!4 &1264536793 stripped
@@ -2678,7 +2680,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318558295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -18.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2785,11 +2787,61 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 9a78f8f0-9fe2-449c-92e8-332ebcd35b6f
-      m_Path: <Keyboard>/x
+      m_Path: <Keyboard>/z
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Hit
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 76f2ff9f-05a1-47f3-b388-679a1756ac08
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Hit
+      m_Flags: 0
+    m_Flags: 0
+  blueHitAction:
+    m_Name: Blue Hit
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5af9f2c1-1dcc-45c9-9d4c-8b24f43faf03
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 3c7aa25a-2ef0-45e7-b6b0-de3cd4aca1ac
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Blue Hit
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 5d99ff45-80d4-4bfc-a60e-b30e5635daed
+      m_Path: <Mouse>/rightButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Blue Hit
+      m_Flags: 0
+    m_Flags: 0
+  keyHitAction:
+    m_Name: Key Hit
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8fda5350-7946-4ae8-b259-d66806cc4855
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 08db2364-69ae-4559-8d56-4304df726f33
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Key Hit
       m_Flags: 0
     m_Flags: 0
   progressBarScript: {fileID: 800235752}

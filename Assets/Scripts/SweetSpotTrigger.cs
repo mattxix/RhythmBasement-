@@ -1,57 +1,103 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-
+/// <summary>
+/// Handles hit detection for all three beat types:
+///   Red  — original hitAction  (e.g. bound to D or mouse click)
+///   Blue — blueHitAction       (bound to Z)
+///   Key  — keyHitAction        (bound to Space)
+///
+/// Wire up the three InputActions in the Inspector (or via a PlayerInput component).
+/// Make sure the tags "Beat", "BeatBlue", "BeatKey" exist in Unity's Tag Manager.
+/// </summary>
 public class SweetSpotTrigger : MonoBehaviour
 {
-    public InputAction hitAction;
+    [Header("Input Actions")]
+    public InputAction hitAction;       // Red  — e.g. D / left-click
+    public InputAction blueHitAction;   // Blue — Z
+    public InputAction keyHitAction;    // Key  — Space
+
+    [Header("References")]
     public ProgressionBar progressBarScript;
 
-    private Collider2D beatInZone = null;
+    // One tracked collider per beat type so two types can overlap the zone
+    private Collider2D redBeatInZone = null;
+    private Collider2D blueBeatInZone = null;
+    private Collider2D keyBeatInZone = null;
 
+    // -----------------------------------------------------------------------
     void OnEnable()
     {
         hitAction.Enable();
-        hitAction.performed += OnHit;
+        blueHitAction.Enable();
+        keyHitAction.Enable();
+
+        hitAction.performed += OnHitRed;
+        blueHitAction.performed += OnHitBlue;
+        keyHitAction.performed += OnHitKey;
     }
 
     void OnDisable()
     {
-        hitAction.performed -= OnHit;
+        hitAction.performed -= OnHitRed;
+        blueHitAction.performed -= OnHitBlue;
+        keyHitAction.performed -= OnHitKey;
+
         hitAction.Disable();
+        blueHitAction.Disable();
+        keyHitAction.Disable();
     }
 
-    void OnHit(InputAction.CallbackContext ctx)
+    
+    void OnHitRed(InputAction.CallbackContext ctx) => ProcessHit(ref redBeatInZone, "Red");
+    void OnHitBlue(InputAction.CallbackContext ctx) => ProcessHit(ref blueBeatInZone, "Blue");
+    void OnHitKey(InputAction.CallbackContext ctx) => ProcessHit(ref keyBeatInZone, "Key");
+
+    void ProcessHit(ref Collider2D beatSlot, string label)
     {
-        if (beatInZone != null)
+        if (beatSlot != null)
         {
-            
             progressBarScript.AddFill();
-            Destroy(beatInZone.gameObject);
-            beatInZone = null;
-            Debug.Log("Hit!");
-           
+            Destroy(beatSlot.gameObject);
+            beatSlot = null;
+            Debug.Log($"Hit! [{label}]");
         }
         else
         {
-            Debug.Log("Empty press");
+            Debug.Log($"Empty press [{label}]");
             progressBarScript.MinusFill();
         }
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Beat"))
-            beatInZone = collision;
+            redBeatInZone = collision;
+        else if (collision.CompareTag("BeatBlue"))
+            blueBeatInZone = collision;
+        else if (collision.CompareTag("BeatKey"))
+            keyBeatInZone = collision;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Beat"))
+        if (collision.CompareTag("Beat") && collision == redBeatInZone)
         {
-            beatInZone = null;
-            Debug.Log("Miss");
+            redBeatInZone = null;
+            Debug.Log("Miss [Red]");
+            progressBarScript.MinusFill();
+        }
+        else if (collision.CompareTag("BeatBlue") && collision == blueBeatInZone)
+        {
+            blueBeatInZone = null;
+            Debug.Log("Miss [Blue]");
+            progressBarScript.MinusFill();
+        }
+        else if (collision.CompareTag("BeatKey") && collision == keyBeatInZone)
+        {
+            keyBeatInZone = null;
+            Debug.Log("Miss [Key]");
             progressBarScript.MinusFill();
         }
     }
