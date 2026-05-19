@@ -366,13 +366,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press your buttons to the beat of the rythem to escape!
+  m_text: 'Press your buttons to the beat of the rhythm to escape!
 
 
     Red Beats
     = Z
 
-    Blue Beats = X'
+    Blue Beats = X
+
+    Grey beats = Space'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c831321eedff774c8e087a348cdc4bc, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 7c831321eedff774c8e087a348cdc4bc, type: 2}
