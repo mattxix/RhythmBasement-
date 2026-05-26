@@ -62,24 +62,38 @@ public class ProgressionBar : MonoBehaviour
 
         if (currentFill >= .99f)
         {
-            beatManagerScript.NextSong();
             currentFill = .25f;
             UpdateBar();
-            currentCamIndex = (currentCamIndex + 1) % cameras.Length;
+            currentCamIndex++;
+
+            if (currentCamIndex >= (cameras.Length - 1))
+            {
+                SceneManager.LoadScene(3);
+                return;
+            }
+
+            beatManagerScript.NextSong();
             SetActiveCamera(currentCamIndex);
         }
     }
 
     public void AddFill()
     {
-        currentFill += 0.12f;
+        currentFill += 0.005f;
+        
+        UpdateBar();
+        FlashBar(new Color(0, .3f, 0));
+    }
+    public void AddFillKey()
+    {
+        currentFill += 0.25f;
         UpdateBar();
         FlashBar(new Color(0, .3f, 0));
     }
 
     public void MinusFill()
     {
-        currentFill -= 0.07f;
+        currentFill -= 0.02f;
         UpdateBar();
         FlashBar(new Color(.3f, 0, 0));
         CameraShake.Instance.Shake();
@@ -107,6 +121,8 @@ public class ProgressionBar : MonoBehaviour
 
     private void SetActiveCamera(int index)
     {
+        
+
         for (int i = 0; i < cameras.Length; i++)
         {
             if (cameras[i] != null)

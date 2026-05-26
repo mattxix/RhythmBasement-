@@ -43,15 +43,36 @@ public class SweetSpotTrigger : MonoBehaviour
         keyHitAction.Disable();
     }
 
-    void OnHitRed(InputAction.CallbackContext ctx) => ProcessHit(ref redBeatInZone, "Red");
-    void OnHitBlue(InputAction.CallbackContext ctx) => ProcessHit(ref blueBeatInZone, "Blue");
-    void OnHitKey(InputAction.CallbackContext ctx) => ProcessHit(ref keyBeatInZone, "Key");
+    void OnHitRed(InputAction.CallbackContext ctx) => ProcessHit1(ref redBeatInZone, "Red");
+    void OnHitBlue(InputAction.CallbackContext ctx) => ProcessHit1(ref blueBeatInZone, "Blue");
+    void OnHitKey(InputAction.CallbackContext ctx) => ProcessHitKey(ref keyBeatInZone, "Key");
 
-    void ProcessHit(ref Collider2D beatSlot, string label)
+    void ProcessHit1(ref Collider2D beatSlot, string label)
     {
         if (beatSlot != null)
         {
             progressBarScript.AddFill();
+            Debug.Log($"Hit! [{label}]");
+
+            GameObject beatObj = beatSlot.gameObject;
+            beatSlot = null;
+
+            // Disable collider immediately so it can't be hit or exited again
+            beatObj.GetComponent<Collider2D>().enabled = false;
+
+            StartCoroutine(HitAnimation(beatObj));
+        }
+        else
+        {
+            Debug.Log($"Empty press [{label}]");
+            progressBarScript.MinusFill();
+        }
+    }
+    void ProcessHitKey(ref Collider2D beatSlot, string label)
+    {
+        if (beatSlot != null)
+        {
+            progressBarScript.AddFillKey();
             Debug.Log($"Hit! [{label}]");
 
             GameObject beatObj = beatSlot.gameObject;
